@@ -1,5 +1,34 @@
-@media (max-width: 768px){
-    #menu-sanduiche{
-        width: 5vw;
-    }
+body{
+    margin: 0;
+    left: 0;
+    background: #EFEFEF;
+}
+
+.container-site{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#header-principal{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+
+    background: #096748;
+    width: 96vw;
+    padding: 2vw;
+}
+
+#container-meio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#escolha-paginas{
+    background: #FFFF;
 }

@@ -1,0 +1,26 @@
+@media (max-width: 768px){
+    #menu-sanduiche{
+        width: 10vw;
+        height: 10vw;
+        filter: invert(1);
+    }
+
+    #texto-header1 h1{
+        font-size: 6vw;
+    }
+
+    #imagem-pagina-inicial-aluno{
+        width: 95vw;
+        height: 50vw;
+        background: gray;
+        margin: 2vw 0 0 0;
+    }
+
+    #escolha-paginas{
+        width: 95vw;
+        height: 60vh;
+        margin: 3vw 0 7vw 0;
+        border-radius: 5vw;
+        box-shadow: 0 1vw 8vw 0.04vw black;
+    }
+}
