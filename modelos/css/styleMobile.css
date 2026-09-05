@@ -10,17 +10,18 @@
     }
 
     #imagem-pagina-inicial-aluno{
-        width: 95vw;
+        width: 92vw;
         height: 50vw;
         background: gray;
         margin: 2vw 0 0 0;
     }
 
     #escolha-paginas{
-        width: 95vw;
+        width: 92vw;
         height: 60vh;
         margin: 3vw 0 7vw 0;
         border-radius: 5vw;
-        box-shadow: 0 1vw 8vw 0.04vw black;
+        color: white;
+        box-shadow: 0 1.5vw 10vw 0.03vw black;
     }
 }
