@@ -15,8 +15,7 @@ body{
     color: white;
     display: flex;
     justify-content: space-between;
-    align-items: center; 
-
+    align-items: center;
     background: #096748;
     width: 96vw;
     padding: 2vw;
@@ -31,4 +30,28 @@ body{
 
 #escolha-paginas{
     background: #FFFF;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+.opção-azul{
+    background: #4A7FF3;
+    width: 83vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+}
+
+.opção-verde{
+    background: #096748;
+    width: 83vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+}
+
+.opção-verde h1, .opção-azul h1{
+    margin-left: 6vw;
 }
