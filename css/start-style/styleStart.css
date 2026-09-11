@@ -12,7 +12,7 @@ body{
     background: #096748;
     width: 96vw;
     padding: 2vw;
-    height: 7vh;
+    height: 5vh;
 }
 
 #menu-sanduiche{
@@ -69,16 +69,16 @@ body{
 
 .opção-azul{
     background: #4A7FF3;
-    width: 90%;
-    height: 10vh;
+    width: 93%;
+    height: 8vh;
     display: flex;
     align-items: center;
 }
 
 .opção-verde{
     background: #096748;
-    width: 90%;
-    height: 10vh;
+    width: 93%;
+    height: 8vh;
     display: flex;
     align-items: center;
 }
@@ -101,38 +101,38 @@ body{
     }
 
     #texto-header1 h1{
-        font-size: 6vw;
+        font-size: 4.5vw;
+
     }
 
     #imagem-pagina-inicial-aluno{
-        width: 90vw;
+        width: 94vw;
         height: 50vw;
         background: gray;
-        margin: 4vw 0 4vw 0;
     }
 
     #escolha-paginas{
-        width: 90vw;
+        width: 94vw;
         height: 60vh;
         margin: 0 0 7vw 0;
         border-radius: 5vw;
         /* color: white; */
-        box-shadow: 0 1.5vw 2vw 0.3vw rgb(128, 128, 128);
+        box-shadow: 0 1.5vw 2vw 0.3vw rgb(215, 215, 215);
     }
 
     .opção-azul{    
-        margin: 3vw 0 3vw 0;
+        margin: -1vw 0 -1vw 0;
         border-radius: 3vw;
-        box-shadow: 0 1vw 1.5vw 0.3vw rgb(64, 64, 64);
+        box-shadow: 0 1vw 1.5vw 0.3vw rgb(215, 215, 215);
     }
 
     .opção-verde{
         border-radius: 3vw;
-        box-shadow: 0 1vw 1.5vw 0.3vw rgb(64, 64, 64);
+        box-shadow: 0 1vw 1.5vw 0.3vw rgb(215, 215, 215);
     }
 
     .paginas-botoes{
-        font-size: 2.5vw;
+        font-size: 2vw;
     }
 
 }
