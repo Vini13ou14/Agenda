@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações de Perfil</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <main class="page">
+        <header class="page-header">
+            <h1>Configurações de perfil</h1>
+            <a class="back-link" href="criar-conta.html">← Voltar</a>
+        </header>
+
+        <!-- Segunda e última etapa do cadastro. -->
+        <section class="card form-card profile-card">
+            <form id="profile-form" novalidate>
+
+                <div class="field">
+                    <label for="state">Estado</label>
+                    <select id="state" required>
+                        <option value="">Selecionar estado</option>
+                        <option value="Pernambuco">Pernambuco</option>
+                        <option value="Paraíba">Paraíba</option>
+                        <option value="Alagoas">Alagoas</option>
+                        <option value="Ceará">Ceará</option>
+                        <option value="Bahia">Bahia</option>
+                        <option value="São Paulo">São Paulo</option>
+                        <option value="Rio de Janeiro">Rio de Janeiro</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="city">Cidade</label>
+                    <select id="city" required>
+                        <option value="">Selecionar cidade</option>
+                        <option value="Santa Cruz do Capibaribe">Santa Cruz do Capibaribe</option>
+                        <option value="Caruaru">Caruaru</option>
+                        <option value="Recife">Recife</option>
+                        <option value="Campina Grande">Campina Grande</option>
+                        <option value="João Pessoa">João Pessoa</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="school">Escola</label>
+                    <select id="school" required>
+                        <option value="">Selecionar escola</option>
+                        <option value="Escola Modelo">Escola Modelo</option>
+                        <option value="Escola Estadual Central">Escola Estadual Central</option>
+                        <option value="Colégio Municipal">Colégio Municipal</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="education">Escolaridade</label>
+                    <select id="education" required>
+                        <option value="">Escolaridade</option>
+                        <option value="Ensino Fundamental">Ensino Fundamental</option>
+                        <option value="Ensino Médio">Ensino Médio</option>
+                        <option value="Ensino Superior">Ensino Superior</option>
+                    </select>
+                </div>
+
+                <p id="profile-message" class="form-message" aria-live="polite"></p>
+
+                <button class="btn btn-primary form-submit" type="submit">
+                    Finalizar
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Configurações básicas da página. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título mostrado na aba do navegador. -->
+    <title>Área Escolar - Início</title>
+
+    <!-- CSS global do projeto. -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!--
+        CONTEÚDO PRINCIPAL:
+        Esta é a página inicial e permanece solta na raiz do projeto,
+        conforme solicitado.
+    -->
+    <main class="page page-home">
+
+        <!-- Cartão principal da tela inicial. -->
+        <section class="card home-card">
+
+            <!-- Área de boas-vindas com a imagem enviada. -->
+            <div class="welcome-area">
+                <img
+                    class="students-image"
+                    src="assets/estudantes.png"
+                    alt="Dois estudantes com materiais escolares"
+                >
+
+                <div class="welcome-content">
+                    <h1>Bem-vindo!</h1>
+
+                    <p>
+                        Para acessar o sistema é necessário fazer o cadastro.
+                        Caso já possua uma conta, clique em login.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Botões de navegação.
+                 Não usam target="_blank", portanto tudo abre na mesma aba. -->
+            <div class="button-stack">
+                <a class="btn btn-primary" href="html/area-login.html">
+                    Login com usuário e senha
+                </a>
+
+                <a class="btn btn-secondary" href="html/area-cadastro.html">
+                    Cadastro
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript global. -->
+    <script src="js/script.js"></script>
+</body>
+</html>

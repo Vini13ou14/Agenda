@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Usuário</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <main class="page">
+        <header class="page-header">
+            <h1>Dados cadastrados</h1>
+            <a class="back-link" href="../index.html">← Início</a>
+        </header>
+
+        <!-- Painel preenchido automaticamente pelo JavaScript. -->
+        <section class="card dashboard-card">
+            <div class="success-badge">✓ Login realizado com sucesso</div>
+
+            <div class="profile-summary">
+                <div class="avatar" aria-hidden="true">👤</div>
+
+                <div>
+                    <p class="eyebrow">Conta de teste</p>
+                    <h2 id="dashboard-name">Carregando...</h2>
+                    <p id="dashboard-role">Perfil</p>
+                </div>
+            </div>
+
+            <!-- Grade com os dados do cadastro. -->
+            <div class="data-grid">
+                <div class="data-item">
+                    <span>Nome de usuário</span>
+                    <strong id="data-username">-</strong>
+                </div>
+
+                <div class="data-item">
+                    <span>CPF</span>
+                    <strong id="data-cpf">-</strong>
+                </div>
+
+                <div class="data-item">
+                    <span>Data de nascimento</span>
+                    <strong id="data-birth">-</strong>
+                </div>
+
+                <div class="data-item">
+                    <span>Estado</span>
+                    <strong id="data-state">-</strong>
+                </div>
+
+                <div class="data-item">
+                    <span>Cidade</span>
+                    <strong id="data-city">-</strong>
+                </div>
+
+                <div class="data-item">
+                    <span>Escola</span>
+                    <strong id="data-school">-</strong>
+                </div>
+
+                <div class="data-item">
+                    <span>Escolaridade</span>
+                    <strong id="data-education">-</strong>
+                </div>
+            </div>
+
+            <!-- Aviso sobre o modo de demonstração. -->
+            <div class="demo-warning">
+                <strong>Modo demonstração:</strong>
+                os dados são salvos apenas no localStorage deste navegador.
+            </div>
+
+            <div class="button-stack dashboard-actions">
+                <a class="btn btn-secondary" href="../index.html">Sair</a>
+
+                <button id="clear-account-button" class="btn btn-outline" type="button">
+                    Apagar cadastro de teste
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

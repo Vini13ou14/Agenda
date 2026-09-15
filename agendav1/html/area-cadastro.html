@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Conta</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <main class="page">
+        <header class="page-header">
+            <h1>Cadastro de conta</h1>
+            <a class="back-link" href="../index.html">← Voltar</a>
+        </header>
+
+        <!-- Escolha do tipo de cadastro. -->
+        <section class="card menu-card">
+            <h2>Selecione seu perfil</h2>
+
+            <div class="role-list">
+                <!-- O perfil será armazenado temporariamente pelo JavaScript. -->
+                <a class="role-button role-blue register-role" data-role="aluno" href="criar-conta.html">
+                    <span>👨‍🎓</span> Aluno
+                </a>
+
+                <a class="role-button role-green register-role" data-role="professor" href="criar-conta.html">
+                    <span>👨‍🏫</span> Professor
+                </a>
+
+                <a class="role-button role-blue register-role" data-role="gestao" href="criar-conta.html">
+                    <span>🏫</span> Gestão
+                </a>
+
+                <a class="role-button role-green register-role" data-role="responsaveis" href="criar-conta.html">
+                    <span>👪</span> Responsáveis
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
