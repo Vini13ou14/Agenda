@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área de Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <main class="page">
+        <!-- Cabeçalho reutilizável das páginas internas. -->
+        <header class="page-header">
+            <h1>Área de login</h1>
+            <a class="back-link" href="../index.html">← Voltar</a>
+        </header>
+
+        <!-- Escolha do perfil para entrar no sistema. -->
+        <section class="card menu-card">
+            <h2>Selecione seu perfil</h2>
+
+            <div class="role-list">
+                <!--
+                    O parâmetro "perfil" será enviado pela URL.
+                    Exemplo: login.html?perfil=aluno
+                -->
+                <a class="role-button role-blue" href="login.html?perfil=aluno">
+                    <span>👨‍🎓</span> Aluno
+                </a>
+
+                <a class="role-button role-green" href="login.html?perfil=professor">
+                    <span>👨‍🏫</span> Professor
+                </a>
+
+                <a class="role-button role-blue" href="login.html?perfil=gestao">
+                    <span>🏫</span> Gestão
+                </a>
+
+                <a class="role-button role-green" href="login.html?perfil=responsaveis">
+                    <span>👪</span> Responsáveis
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

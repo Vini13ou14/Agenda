@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <main class="page">
+        <header class="page-header">
+            <!-- O JavaScript troca o texto conforme o perfil escolhido. -->
+            <h1 id="login-title">Login</h1>
+
+            <a class="back-link" href="area-login.html">← Voltar</a>
+        </header>
+
+        <!-- Formulário de autenticação do protótipo. -->
+        <section class="card form-card login-card">
+            <form id="login-form" novalidate>
+
+                <div class="field">
+                    <label for="login-user">Nome de usuário ou CPF</label>
+                    <input
+                        id="login-user"
+                        type="text"
+                        placeholder="Nome de usuário ou CPF"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="login-password">Senha</label>
+                    <input
+                        id="login-password"
+                        type="password"
+                        placeholder="Senha"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <!-- Mensagens de validação aparecem aqui. -->
+                <p id="login-message" class="form-message" aria-live="polite"></p>
+
+                <button class="btn btn-primary form-submit" type="submit">
+                    Acessar
+                </button>
+            </form>
+
+            <!--
+                Esta caixa mostra as credenciais apenas para facilitar os testes.
+                Em um sistema real, a senha nunca deve ser exibida.
+            -->
+            <div id="test-login-data" class="test-data hidden"></div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

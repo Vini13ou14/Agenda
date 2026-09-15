@@ -1,0 +1,411 @@
+/* ============================================================
+   TOKENS — cores, tipografia e medidas usadas no projeto todo.
+   Definidos como variáveis para manter consistência entre telas.
+   ============================================================ */
+:root {
+  /* cores principais (inspiradas no protótipo: azul + verde sobre branco) */
+  --cor-azul: #3f6df2;
+  --cor-azul-escuro: #2c53c9;
+  --cor-verde: #1f9d5c;
+  --cor-verde-escuro: #167a47;
+
+  /* fundo geral fora dos cartões — remete ao "modo apresentação" do mockup */
+  --cor-fundo: #131a2a;
+  --cor-fundo-gradiente: radial-gradient(circle at 20% -10%, #223261 0%, #131a2a 55%);
+
+  --cor-cartao: #ffffff;
+  --cor-texto: #1c2333;
+  --cor-texto-suave: #6b7280;
+  --cor-borda: #e6e8f0;
+  --cor-erro: #d5414a;
+
+  /* tipografia: serif com personalidade para títulos, sans limpa para o resto */
+  --fonte-titulo: "Fraunces", Georgia, serif;
+  --fonte-texto: "Manrope", system-ui, sans-serif;
+
+  /* raio de borda único, aplicado com intenção (cartões e botões) */
+  --raio-grande: 26px;
+  --raio-medio: 14px;
+
+  --sombra-cartao: 0 30px 60px -25px rgba(10, 15, 35, 0.55);
+}
+
+/* ============================================================
+   RESET BÁSICO
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--cor-fundo-gradiente);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--fonte-titulo); margin: 0; }
+
+button, input, select {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+/* foco visível — acessibilidade em qualquer tamanho de tela */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #9ab4ff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ============================================================
+   MOBILE FIRST — estilos base pensados para telas pequenas
+   (a partir daqui, media queries só ADICIONAM/ajustam para telas maiores)
+   ============================================================ */
+
+/* "Palco": área central onde as telas do app aparecem.
+   No celular ocupa quase toda a largura da viewport. */
+.palco {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 16px 48px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Cada <section data-tela> representa uma tela do fluxo.
+   Só a tela ativa é exibida; as demais ficam ocultas. */
+.tela {
+  display: none;
+  width: 100%;
+  max-width: 420px;
+}
+
+.tela--ativa {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: entrada-suave 0.25s ease-out;
+}
+
+@keyframes entrada-suave {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Cabeçalho com botão de voltar + título da tela */
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #f5f7ff;
+  padding: 4px 4px 0;
+}
+
+.cabecalho h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.botao-voltar {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: #c3cdf5;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.botao-voltar:hover { color: #ffffff; }
+
+/* Cartão branco — recipiente principal de conteúdo de cada tela */
+.cartao {
+  background: var(--cor-cartao);
+  border-radius: var(--raio-grande);
+  box-shadow: var(--sombra-cartao);
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.subtitulo {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.95rem;
+}
+
+/* --- Tela de boas-vindas ------------------------------------ */
+.boas-vindas__ilustracao {
+  display: flex;
+  justify-content: center;
+}
+
+.ilustracao-svg {
+  width: 160px;
+  height: auto;
+}
+
+.boas-vindas__texto {
+  margin: 0;
+  text-align: center;
+  color: var(--cor-texto-suave);
+  font-size: 0.95rem;
+}
+
+.pilha-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --- Botões genéricos ----------------------------------------- */
+.botao {
+  border: none;
+  border-radius: var(--raio-medio);
+  padding: 15px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #ffffff;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.botao:hover { filter: brightness(1.06); }
+.botao:active { transform: scale(0.98); }
+
+.botao--azul { background: var(--cor-azul); }
+.botao--azul:hover { background: var(--cor-azul-escuro); }
+
+.botao--verde { background: var(--cor-verde); }
+.botao--verde:hover { background: var(--cor-verde-escuro); }
+
+.botao--centralizado { align-self: center; min-width: 60%; }
+
+/* --- Lista de escolha de perfil (aluno/professor/gestão/resp.) - */
+.lista-perfis {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.botao-perfil {
+  border: none;
+  border-radius: var(--raio-medio);
+  padding: 14px 18px;
+  text-align: left;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.botao-perfil:hover { filter: brightness(1.06); }
+.botao-perfil:active { transform: scale(0.98); }
+
+.botao-perfil--azul { background: var(--cor-azul); }
+.botao-perfil--verde { background: var(--cor-verde); }
+
+/* --- Formulários ------------------------------------------------ */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo__rotulo {
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+  font-weight: 600;
+}
+
+.campo input,
+.campo select {
+  border: 1px solid var(--cor-borda);
+  background: #f7f8fc;
+  border-radius: var(--raio-medio);
+  padding: 13px 14px;
+  color: var(--cor-texto);
+}
+
+.campo select:disabled {
+  color: #a7adba;
+  cursor: not-allowed;
+}
+
+.campo input::placeholder { color: #9aa0b4; }
+
+#form-login,
+#form-criacao-conta,
+#form-config-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mensagem-erro {
+  margin: 0;
+  color: var(--cor-erro);
+  font-size: 0.88rem;
+  background: #fdeceD;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* --- Painel (dados exibidos após login) ------------------------- */
+.painel__saudacao {
+  margin: 0;
+  color: var(--cor-texto-suave);
+}
+
+.painel__lista {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.painel__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--cor-borda);
+  padding-bottom: 10px;
+}
+
+.painel__item dt {
+  color: var(--cor-texto-suave);
+  font-size: 0.88rem;
+}
+
+.painel__item dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* barrinha decorativa inferior, lembrando o "home indicator" do mockup original */
+.barra-inferior {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ============================================================
+   BREAKPOINT 1 — telas de celular maiores (≥ 480px)
+   ============================================================ */
+@media (min-width: 480px) {
+  .cartao { padding: 32px 28px; }
+  .cabecalho h1 { font-size: 1.65rem; }
+}
+
+/* ============================================================
+   BREAKPOINT 2 — tablets em pé (≥ 700px)
+   Os cartões ganham mais respiro e a tipografia cresce um pouco.
+   ============================================================ */
+@media (min-width: 700px) {
+  .palco { padding: 40px 24px 64px; }
+  .tela { max-width: 480px; }
+  .cartao { padding: 38px 34px; border-radius: 30px; }
+  .cabecalho h1 { font-size: 1.85rem; }
+  .boas-vindas__texto { font-size: 1.02rem; }
+  .ilustracao-svg { width: 190px; }
+}
+
+/* ============================================================
+   BREAKPOINT 3 — tablets em paisagem / notebooks (≥ 1024px)
+   O "palco" passa a exibir a tela como um painel lado a lado
+   com uma coluna de identidade visual, como um site de verdade.
+   ============================================================ */
+@media (min-width: 1024px) {
+  .palco {
+    align-items: center;
+    padding: 48px 40px;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .tela { max-width: 540px; }
+
+  .cartao {
+    padding: 46px 48px;
+    gap: 22px;
+  }
+
+  .cabecalho {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cabecalho h1 { font-size: 2rem; }
+
+  .lista-perfis { gap: 14px; }
+
+  .botao-perfil { padding: 16px 20px; font-size: 1.02rem; }
+
+  /* em telas largas, login/cadastro exibem os campos em duas colunas */
+  #form-criacao-conta,
+  #form-config-perfil {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 18px;
+  }
+
+  #form-criacao-conta .botao,
+  #form-config-perfil .botao,
+  #form-criacao-conta .mensagem-erro {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ============================================================
+   BREAKPOINT 4 — monitores grandes (≥ 1440px)
+   Limite máximo de largura para não esticar demais o conteúdo
+   e manter linhas de texto confortáveis de ler.
+   ============================================================ */
+@media (min-width: 1440px) {
+  .tela { max-width: 620px; }
+  .cartao { padding: 54px 60px; }
+  .cabecalho h1 { font-size: 2.2rem; }
+  .ilustracao-svg { width: 220px; }
+}
+
+
+/* Campos obrigatórios */
+.campo:has(input:required) .campo__rotulo::after,
+.campo:has(select:required) .campo__rotulo::after,
+.campo:has(textarea:required) .campo__rotulo::after {
+  content: " *";
+  color: #d93025;
+  font-weight: 700;
+}
+
+/* Realce nativo para campo obrigatório inválido */
+.campo input:required:invalid,
+.campo select:required:invalid,
+.campo textarea:required:invalid {
+  outline-color: #d93025;
+}
+
+/* A navegação continua em uma única página, sem recarregar o documento. */
+html {
+  scroll-behavior: smooth;
+}

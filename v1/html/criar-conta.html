@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Configurações de codificação e viewport responsivo. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título da etapa de criação da conta. -->
+    <title>Criação de Conta</title>
+
+    <!-- Folha de estilos global. -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <!--
+        Tela de criação da conta.
+        O layout é Mobile First e o CSS faz o cartão preencher
+        praticamente toda a viewport.
+    -->
+    <main class="page">
+
+        <!-- Cabeçalho da página. -->
+        <header class="page-header">
+            <h1>Criação de conta</h1>
+
+            <!-- Retorna para a seleção de perfil na mesma aba. -->
+            <a class="back-link" href="area-cadastro.html">
+                ← Voltar
+            </a>
+        </header>
+
+        <!-- Cartão que contém TODOS os campos da primeira etapa. -->
+        <section class="card form-card">
+
+            <!-- Formulário da primeira etapa do cadastro. -->
+            <form id="account-form" novalidate>
+
+                <!-- 1. Nome de usuário. -->
+                <div class="field">
+                    <label for="user-name">Nome de usuário</label>
+
+                    <input
+                        id="user-name"
+                        type="text"
+                        placeholder="Nome de usuário"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <!-- 2. CPF. -->
+                <div class="field">
+                    <label for="cpf">CPF</label>
+
+                    <input
+                        id="cpf"
+                        type="text"
+                        inputmode="numeric"
+                        maxlength="14"
+                        placeholder="Digite o seu CPF"
+                        required
+                    >
+                </div>
+
+                <!-- 3. Data de nascimento. -->
+                <div class="field">
+                    <label for="birth-date">Data de nascimento</label>
+
+                    <input
+                        id="birth-date"
+                        type="date"
+                        required
+                    >
+                </div>
+
+                <!-- 4. Senha. -->
+                <div class="field">
+                    <label for="password">Senha</label>
+
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Senha"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <!-- 5. Confirmação da senha. -->
+                <div class="field">
+                    <label for="confirm-password">Confirmar senha</label>
+
+                    <input
+                        id="confirm-password"
+                        type="password"
+                        placeholder="Confirmar senha"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <!-- Mensagens de validação do formulário. -->
+                <p
+                    id="account-message"
+                    class="form-message"
+                    aria-live="polite"
+                ></p>
+
+                <!-- Avança para a segunda etapa do cadastro. -->
+                <button
+                    class="btn btn-primary form-submit"
+                    type="submit"
+                >
+                    Continuar
+                </button>
+
+            </form>
+        </section>
+    </main>
+
+    <!-- JavaScript global do projeto. -->
+    <script src="../js/script.js"></script>
+</body>
+</html>
