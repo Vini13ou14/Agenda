@@ -1,3 +1,78 @@
+:root {
+  --bg-start: #dfe7f9;
+  --bg-mid: #edf3f7;
+  --bg-end: #e7efe9;
+  --shell-bg: rgba(255, 255, 255, 0.72);
+  --screen-bg: linear-gradient(180deg, #f7f5f3 0%, #f0f4f8 100%);
+  --screen-surface: rgba(255, 255, 255, 0.88);
+  --panel-border: rgba(148, 163, 184, 0.18);
+  --text-main: #1a1d29;
+  --text-soft: #5f6978;
+  --text-subtle: #7b8797;
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --input-border: rgba(148, 163, 184, 0.35);
+  --badge-bg: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  --badge-text: #2563eb;
+  --button-shadow: rgba(37, 99, 235, 0.12);
+  --card-shadow: rgba(31, 41, 55, 0.04);
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --toggle-bg: rgba(15, 23, 42, 0.04);
+}
+
+body[data-theme="dark"] {
+  /* =========================================================
+     TEMA ESCURO
+     Ajustado para ser elegante e menos pesado, sem prejudicar
+     a legibilidade do conteúdo principal do app.
+     ========================================================= */
+  --bg-start: #1b2432;
+  --bg-mid: #1d2c3d;
+  --bg-end: #141d2a;
+  --shell-bg: rgba(17, 25, 37, 0.82);
+  --screen-bg: linear-gradient(180deg, #1d2a39 0%, #172534 100%);
+  --screen-surface: rgba(25, 36, 49, 0.9);
+  --panel-border: rgba(148, 163, 184, 0.13);
+  --text-main: #edf4ff;
+  --text-soft: #d7e2f6;
+  --text-subtle: #aebfd9;
+  --input-bg: rgba(15, 23, 34, 0.88);
+  --input-border: rgba(148, 163, 184, 0.18);
+  --badge-bg: linear-gradient(135deg, #2b5ccc 0%, #1d4ca8 100%);
+  --badge-text: #edf5ff;
+  --button-shadow: rgba(59, 130, 246, 0.12);
+  --card-shadow: rgba(2, 6, 23, 0.22);
+  --card-bg: rgba(24, 35, 49, 0.8);
+  --toggle-bg: rgba(148, 163, 184, 0.08);
+}
+
+body[data-theme="dark"] .screen {
+  background: linear-gradient(180deg, #1f2d3d 0%, #192737 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+body[data-theme="dark"] .screen-header,
+body[data-theme="dark"] .title-md,
+body[data-theme="dark"] .title-lg,
+body[data-theme="dark"] .clock,
+body[data-theme="dark"] .link-back,
+body[data-theme="dark"] .muted,
+body[data-theme="dark"] .role-btn {
+  color: var(--text-main);
+}
+
+body[data-theme="dark"] .role-btn {
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 10px 18px rgba(15, 23, 42, 0.14);
+}
+
+body[data-theme="dark"] .btn-blue {
+  background: linear-gradient(135deg, #5d80e7 0%, #496bc7 100%);
+}
+
+body[data-theme="dark"] .btn-green {
+  background: linear-gradient(135deg, #1b9a7c 0%, #0d7b66 100%);
+}
+
 /* =========================================================
    RESET E BASE
    ========================================================= */
@@ -9,13 +84,14 @@
 
 body {
   font-family: "Inter", sans-serif;
-  background: #d3d3d3;
-  color: #1a1d29;
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 30%, var(--bg-end) 100%);
+  color: var(--text-main);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 7px;
+  padding: 14px;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 button {
@@ -35,15 +111,50 @@ select {
    O layout foi aproximado ao mockup, com múltiplos cards de
    celular em fundo cinza e uma aparência mais "projeto de UI".
    ========================================================= */
+.theme-toggle-wrap {
+  /* =========================================================
+     BOTÃO DE TEMA
+     Fica fixo no canto superior para alternar entre o tema claro
+     e o escuro sem interferir no fluxo principal do app.
+     ========================================================= */
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 3;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--toggle-bg);
+  color: var(--text-main);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
 .app-shell {
   width: 100%;
   max-width: 420px;
-  background: #f3f3f3;
-  border-radius: 10px;
-  box-shadow: none;
+  background: var(--shell-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 22px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
   overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.04);
+  border: 1px solid var(--panel-border);
   margin: 2px;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .content {
@@ -62,11 +173,12 @@ select {
 /* Animação de entrada de cada tela injetada pelo router */
 .screen {
   animation: fade-in 0.25s ease;
-  background: #eceae8;
-  border-radius: 10px;
+  background: var(--screen-bg);
+  border-radius: 22px;
   min-height: 620px;
-  padding: 14px 18px 18px;
-  box-shadow: none;
+  padding: 16px 20px 22px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(4px); }
@@ -88,25 +200,31 @@ select {
   letter-spacing: 0.2px;
 }
 
+body[data-theme="dark"] .clock {
+  color: #e5ecff;
+}
+
 /* ---------- Tipografia ---------- */
 .title-lg {
   font-family: "Manrope", sans-serif;
   font-weight: 800;
-  font-size: 28px;
-  color: #111318;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+  color: var(--text-main);
 }
 .title-md {
   font-family: "Manrope", sans-serif;
   font-weight: 700;
-  font-size: 22px;
-  color: #111318;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
 }
 .subtitle {
   font-size: 14px;
-  line-height: 1.6;
-  color: #6b7280;
-  margin-top: 8px;
-  margin-bottom: 24px;
+  line-height: 1.7;
+  color: var(--text-soft);
+  margin-top: 10px;
+  margin-bottom: 26px;
 }
 .muted {
   font-size: 13px;
@@ -122,19 +240,23 @@ select {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 22px;
   min-height: 48px;
 }
+
 .link-back {
   background: none;
   margin-top: 0;
   font-size: 13px;
-  color: #1d1d1d;
-  transition: color 0.15s;
+  color: var(--text-main);
+  transition: color 0.15s, transform 0.15s;
   font-weight: 700;
 }
+
 .link-back:hover {
-  color: #1a1d29;
+  color: var(--text-main);
+  transform: translateX(-2px);
 }
 
 /* Link em forma de botão, usado dentro de textos */
@@ -156,60 +278,81 @@ select {
   flex-direction: column;
   gap: 12px;
 }
+
 .btn {
-  border-radius: 10px;
-  padding: 14px 18px;
+  border-radius: 14px;
+  padding: 15px 18px;
   font-size: 15px;
   font-weight: 700;
   color: #ffffff;
-  transition: background 0.15s, transform 0.05s;
+  transition: background 0.15s, transform 0.12s, box-shadow 0.15s, filter 0.15s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: none;
-  min-height: 48px;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.12);
+  min-height: 52px;
 }
+
+.btn:hover {
+  filter: brightness(1.02);
+}
+
+.btn:hover {
+  box-shadow: 0 14px 24px rgba(15, 23, 42, 0.1);
+}
+
 .btn:active {
   transform: scale(0.98);
 }
-.btn-blue  { background: #4d7ef3; }
-.btn-blue:hover  { background: #3d6ee1; }
-.btn-green { background: #0a8b6d; }
-.btn-green:hover { background: #0a7a60; }
+
+.btn-blue  { background: linear-gradient(135deg, #4d7ef3 0%, #3769de 100%); }
+.btn-blue:hover  { background: linear-gradient(135deg, #3f72ef 0%, #2f61cf 100%); }
+.btn-green { background: linear-gradient(135deg, #0a8b6d 0%, #07775b 100%); }
+.btn-green:hover { background: linear-gradient(135deg, #0a7f67 0%, #056d53 100%); }
 
 .btn-inline {
   width: auto;
   align-self: center;
 }
+
 .role-btn {
   width: 100%;
   justify-content: flex-start;
   text-align: left;
-  height: 46px;
-  border-radius: 10px;
-  padding: 0 16px;
+  height: 52px;
+  border-radius: 14px;
+  padding: 0 18px;
+  font-size: 15px;
+  letter-spacing: 0.01em;
 }
 
 /* ---------- Campos de formulário ---------- */
 .input {
   width: 100%;
-  background: #e3e3e3;
-  border: 1px solid #d8d8d8;
-  border-radius: 12px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 14px;
   padding: 14px 16px;
-  color: #1a1d29;
+  color: var(--text-main);
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
-  min-height: 42px;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s, background 0.15s;
+  min-height: 48px;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 .input::placeholder {
-  color: #7d7d7d;
+  color: var(--text-subtle);
 }
+
+.input:disabled {
+  opacity: 0.62;
+  cursor: not-allowed;
+}
+
 .input:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
-  background: #f2f2f2;
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+  background: var(--screen-surface);
 }
 
 /* Seta customizada dos <select> (a nativa varia entre navegadores) */
@@ -222,12 +365,14 @@ select {
 
 /* Caixa destacada da tela de login */
 .login-box {
-  border: 0;
-  border-radius: 18px;
-  padding: 0;
+  border: 1px solid var(--panel-border);
+  background: var(--screen-surface);
+  border-radius: 20px;
+  padding: 18px 16px 16px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.05);
 }
 
 /* "manter conectado" */
@@ -236,7 +381,7 @@ select {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-soft);
   cursor: pointer;
 }
 .checkbox input {
@@ -250,11 +395,13 @@ select {
 .error {
   font-size: 13px;
   color: #ef4444;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .hint {
   font-size: 13px;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 12px 14px;
   margin-bottom: 16px;
   display: flex;
@@ -262,6 +409,7 @@ select {
   gap: 8px;
   flex-wrap: wrap;
   background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(148, 163, 184, 0.15);
 }
 .hint-success {
   background: #ecfdf5;
@@ -285,79 +433,227 @@ select {
 }
 
 /* ---------- Tela de boas-vindas ---------- */
+#screen-welcome {
+  background: linear-gradient(180deg, #f7fafd 0%, #eef6f5 100%);
+  position: relative;
+}
+
+body[data-theme="dark"] #screen-welcome {
+  background: linear-gradient(180deg, #1a2433 0%, #171f2d 100%);
+}
+
+#screen-welcome::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.08), transparent 30%);
+  pointer-events: none;
+}
+
+body[data-theme="dark"] #screen-welcome::before {
+  background: radial-gradient(circle at top right, rgba(96, 165, 250, 0.14), transparent 32%);
+}
+
 .welcome-illustration {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   gap: 26px;
-  margin: 12px auto 18px;
-  padding-top: 10px;
+  margin: 10px auto 24px;
+  padding-top: 12px;
+  z-index: 1;
 }
+
 .bubble {
-  width: 110px;
-  height: 92px;
-  border-radius: 50px 50px 0 0;
+  width: 118px;
+  height: 94px;
+  border-radius: 42px 42px 26px 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 34px;
   position: relative;
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.08);
 }
+
 .bubble::after {
   content: "";
   position: absolute;
-  bottom: -10px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 24px;
-  height: 18px;
+  width: 26px;
+  height: 20px;
   background: inherit;
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 18px 18px;
 }
-.bubble-blue  { background: #d9ebff; }
-.bubble-green { background: #cfe8df; height: 104px; }
+
+.bubble-blue  {
+  background: linear-gradient(180deg, #dfeeff 0%, #cfe0ff 100%);
+}
+
+.bubble-green {
+  background: linear-gradient(180deg, #dff8f1 0%, #d3f3ea 100%);
+  height: 112px;
+}
+
+#screen-welcome .title-lg {
+  position: relative;
+  z-index: 1;
+}
+
+#screen-welcome .subtitle {
+  position: relative;
+  z-index: 1;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#screen-welcome .stack {
+  position: relative;
+  z-index: 1;
+  margin-top: 10px;
+}
+
+#screen-welcome .storage-note {
+  position: relative;
+  z-index: 1;
+}
 
 /* ---------- Painel do usuário logado ---------- */
+#screen-dashboard {
+  background: linear-gradient(180deg, #f8fbff 0%, #eef3f8 100%);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+body[data-theme="dark"] #screen-dashboard {
+  background: linear-gradient(180deg, #1a2433 0%, #171f2d 100%);
+  border: 1px solid rgba(148, 163, 184, 0.09);
+}
+
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
 }
+
+.dashboard-header .title-lg {
+  margin-top: 4px;
+  font-size: 30px;
+}
+
+#btn-sair {
+  background: rgba(15, 23, 42, 0.04);
+  color: #1f2937;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 9px 12px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+body[data-theme="dark"] #btn-sair,
+body[data-theme="dark"] #btn-sair.link-back {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.1));
+  color: #f8fbff !important;
+  border: 1px solid rgba(191, 219, 254, 0.42);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+#btn-sair:hover {
+  background: rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+body[data-theme="dark"] #btn-sair:hover,
+body[data-theme="dark"] #btn-sair.link-back:hover {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.24), rgba(59, 130, 246, 0.14));
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--badge-bg);
+  color: var(--badge-text);
   font-size: 12px;
-  font-weight: 600;
-  padding: 6px 12px;
+  font-weight: 700;
+  padding: 7px 12px;
   border-radius: 999px;
   margin-bottom: 18px;
+  letter-spacing: 0.02em;
 }
+
 .data-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 12px;
 }
+
 .data-card {
-  background: #f9fafb;
-  border: 1px solid #f1f2f4;
-  border-radius: 12px;
-  padding: 12px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 18px var(--card-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
+body[data-theme="dark"] .data-card {
+  background: rgba(30, 41, 59, 0.88);
+  border-color: rgba(148, 163, 184, 0.17);
+  box-shadow: 0 12px 26px rgba(2, 6, 23, 0.26);
+}
+
+.data-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 22px rgba(31, 41, 55, 0.06);
+}
+
 .data-label {
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
+
+body[data-theme="dark"] .data-label {
+  color: #c5d8f5;
+}
+
 .data-value {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1a1d29;
-  margin-top: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-top: 5px;
   word-break: break-word;
 }
+
+body[data-theme="dark"] .data-value {
+  color: #f5f9ff;
+}
+
+#dash-criado-em {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  font-size: 12px;
+  color: #64748b;
+  text-align: left;
+}
+
+body[data-theme="dark"] #dash-criado-em {
+  color: #d3e1fa;
+  border-top-color: rgba(148, 163, 184, 0.16);
+}
+
 
 /* =========================================================
    TABLET — a partir de 640px
@@ -395,8 +691,9 @@ select {
     position: relative;
     overflow: hidden;
     padding: 40px;
-    background: linear-gradient(135deg, #2563eb, #065f46);
+    background: linear-gradient(135deg, #1d4ed8 0%, #0f766e 100%);
     color: #ffffff;
+    box-shadow: inset -1px 0 0 rgba(255,255,255,0.08);
   }
 
   /* Círculos decorativos do fundo */
@@ -417,17 +714,18 @@ select {
     font-family: "Manrope", sans-serif;
     font-weight: 700;
     font-size: 18px;
+    letter-spacing: -0.03em;
   }
   .brand-tagline {
     margin-top: 12px;
     max-width: 220px;
     font-size: 14px;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.8);
   }
   .brand-footer {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.68);
   }
 
   /* Indicador de progresso */

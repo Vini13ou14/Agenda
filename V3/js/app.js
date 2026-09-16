@@ -92,8 +92,14 @@ function podeAbrir(name) {
 /** Atualiza o indicador de progresso do painel lateral (desktop). */
 function updateSteps(screenName) {
   const order = {
-    welcome: 0, role: 1, cadastro: 2, login: 2, perfil: 3, dashboard: 3,
+    welcome: 0,
+    role: 1,
+    cadastro: 2,
+    login: 2,
+    perfil: 3,
+    dashboard: 3,
   };
+
   const current = order[screenName] ?? 0;
 
   document.querySelectorAll(".step").forEach((stepEl) => {
@@ -101,60 +107,87 @@ function updateSteps(screenName) {
   });
 }
 
+/** Busca um elemento de forma segura e centralizada. */
+const getElement = (id) => document.getElementById(id);
+
+/** Cria um clique seguro, ignorando elementos que não existem. */
+function bindClick(id, handler) {
+  const element = getElement(id);
+  if (element) {
+    element.addEventListener("click", handler);
+  }
+}
+
+/** Mostra uma mensagem de erro de forma segura dentro do formulário. */
+function showError(errorEl, message) {
+  if (!errorEl) return;
+  errorEl.textContent = message;
+  errorEl.hidden = false;
+}
+
+/** Limpa o fluxo temporário ao voltar para a tela inicial. */
+function resetTransientState() {
+  state.mode = null;
+  state.pendingRole = null;
+  state.cadastroDados = null;
+}
+
 /* =========================================================
    TELA: BOAS-VINDAS
    ========================================================= */
 function initWelcome() {
-  // Voltar ao início limpa o fluxo pela metade que tenha ficado
-  state.mode = null;
-  state.pendingRole = null;
-  state.cadastroDados = null;
+  // Voltar ao início limpa o fluxo pela metade que tenha ficado.
+  resetTransientState();
 
-  document.getElementById("btn-go-login").addEventListener("click", () => {
+  bindClick("btn-go-login", () => {
     state.mode = "login";
     Router.navigate("role");
   });
 
-  document.getElementById("btn-go-cadastro").addEventListener("click", () => {
+  bindClick("btn-go-cadastro", () => {
     state.mode = "cadastro";
     Router.navigate("role");
   });
 
-  // --- Aviso se o navegador estiver bloqueando o armazenamento ---
-  if (!Storage.persistente()) {
-    document.getElementById("welcome-sem-storage").hidden = false;
-  }
-
-  // --- Sessão salva: permite entrar direto, sem digitar a senha ---
+  // Sessão salva: permite entrar direto, sem digitar a senha.
   const conta = Storage.contaLogada();
   if (conta) {
-    document.getElementById("welcome-sessao").hidden = false;
-    document.getElementById("welcome-sessao-texto").textContent =
-      `você está conectado como ${conta.username}.`;
+    const sessaoEl = getElement("welcome-sessao");
+    const textoSessaoEl = getElement("welcome-sessao-texto");
 
-    document.getElementById("btn-continuar-sessao").addEventListener("click", () => {
+    if (sessaoEl) sessaoEl.hidden = false;
+    if (textoSessaoEl) {
+      textoSessaoEl.textContent = `você está conectado como ${conta.username}.`;
+    }
+
+    bindClick("btn-continuar-sessao", () => {
       state.contaAtual = conta;
       state.justCreated = false;
       Router.navigate("dashboard");
     });
   }
 
-  // --- Contagem de contas salvas + botão de apagar tudo ---
+  // Contagem de contas salvas + botão de apagar tudo.
   const contas = Storage.listarContas();
   if (contas.length > 0) {
-    document.getElementById("storage-note").hidden = false;
-    document.getElementById("storage-count").textContent =
-      `${contas.length} conta(s) salva(s) neste navegador · `;
+    const noteEl = getElement("storage-note");
+    const countEl = getElement("storage-count");
 
-    document.getElementById("btn-apagar-dados").addEventListener("click", () => {
+    if (noteEl) noteEl.hidden = false;
+    if (countEl) {
+      countEl.textContent = `${contas.length} conta(s) salva(s) neste navegador · `;
+    }
+
+    bindClick("btn-apagar-dados", () => {
       const confirmar = confirm(
         "Isso vai apagar todas as contas salvas neste navegador. Deseja continuar?"
       );
-      if (confirmar) {
-        Storage.apagarTudo();
-        state.contaAtual = null;
-        Router.navigate("welcome"); // recarrega a tela já sem os dados
-      }
+
+      if (!confirmar) return;
+
+      Storage.apagarTudo();
+      state.contaAtual = null;
+      Router.navigate("welcome");
     });
   }
 }
@@ -290,14 +323,33 @@ function initCadastro() {
    TELA: CONFIGURAÇÕES DE PERFIL (2ª etapa — grava os dados)
    ========================================================= */
 function initPerfil() {
+  const estadoSelect = document.getElementById("perfil-estado");
+  const cidadeSelect = document.getElementById("perfil-cidade");
+  const errorEl = document.getElementById("perfil-error");
+
+  if (!estadoSelect || !cidadeSelect) return;
+
+  carregarEstadosDoIbge(estadoSelect, cidadeSelect, errorEl);
+
   document.getElementById("btn-perfil-back").addEventListener("click", () => Router.back());
 
+  estadoSelect.addEventListener("change", () => {
+    const estadoSelecionado = estadoSelect.value;
+
+    if (!estadoSelecionado) {
+      cidadeSelect.innerHTML = '<option value="" disabled selected>selecione um estado primeiro</option>';
+      cidadeSelect.disabled = true;
+      return;
+    }
+
+    carregarMunicipiosDoEstado(estadoSelecionado, cidadeSelect, errorEl);
+  });
+
   document.getElementById("btn-finalizar").addEventListener("click", () => {
-    const estado = document.getElementById("perfil-estado").value;
-    const cidade = document.getElementById("perfil-cidade").value;
+    const estado = estadoSelect.value;
+    const cidade = cidadeSelect.value;
     const escola = document.getElementById("perfil-escola").value;
     const escolaridade = document.getElementById("perfil-escolaridade").value;
-    const errorEl = document.getElementById("perfil-error");
 
     if (!estado || !cidade || !escola || !escolaridade) {
       showError(errorEl, "Selecione todas as opções para finalizar.");
@@ -306,18 +358,20 @@ function initPerfil() {
 
     errorEl.hidden = true;
 
-    // Monta a conta final juntando as duas etapas do cadastro
+    // Salva o nome completo do estado para a conta final.
+    const estadoNome = estadoSelect.options[estadoSelect.selectedIndex]?.textContent || estado;
+
+    // Junta todas as etapas do cadastro em uma conta final.
     const conta = {
       role: state.pendingRole,
       ...state.cadastroDados,
-      estado,
+      estado: estadoNome,
       cidade,
       escola,
       escolaridade,
-      criadoEm: new Date().toISOString(), // carimbo de criação
+      criadoEm: new Date().toISOString(),
     };
 
-    // ---- GRAVAÇÃO NO NAVEGADOR ----
     const salvou = Storage.salvarConta(conta);
     if (!salvou) {
       showError(errorEl, "Não foi possível salvar os dados neste navegador.");
@@ -325,49 +379,135 @@ function initPerfil() {
     }
 
     state.justCreated = true;
-    Router.navigate("login"); // leva direto ao login daquele perfil
+    Router.navigate("login");
   });
 }
 
-/* =========================================================
-   TELA: PAINEL (mostra os dados salvos)
-   ========================================================= */
-function initDashboard() {
-  // Conta carregada no login ou, se a página foi recarregada,
-  // a conta da sessão salva no navegador.
-  const conta = state.contaAtual || Storage.contaLogada();
-  state.contaAtual = conta;
+/** Carrega os 27 estados brasileiros diretamente da API oficial do IBGE. */
+async function carregarEstadosDoIbge(estadoSelect, cidadeSelect, errorEl) {
+  if (!estadoSelect || !cidadeSelect) return;
 
-  document.getElementById("dash-username").textContent = conta.username;
-  document.getElementById("dash-role-badge").textContent = `conta de ${conta.role.label}`;
-  document.getElementById("dash-cpf").textContent = conta.cpf || "—";
-  document.getElementById("dash-nascimento").textContent = formatDate(conta.nascimento);
-  document.getElementById("dash-estado").textContent = conta.estado || "—";
-  document.getElementById("dash-cidade").textContent = conta.cidade || "—";
-  document.getElementById("dash-escola").textContent = conta.escola || "—";
-  document.getElementById("dash-escolaridade").textContent = conta.escolaridade || "—";
+  estadoSelect.disabled = true;
+  cidadeSelect.disabled = true;
+  cidadeSelect.innerHTML = '<option value="" disabled selected>selecione um estado primeiro</option>';
+  estadoSelect.innerHTML = '<option value="" disabled selected>carregando estados...</option>';
 
-  if (conta.criadoEm) {
-    document.getElementById("dash-criado-em").textContent =
-      `conta salva neste navegador em ${formatDateTime(conta.criadoEm)}`;
+  try {
+    const estados = await Localidades.carregarEstados();
+
+    estadoSelect.innerHTML = '<option value="" disabled selected>selecionar estado</option>';
+
+    estados
+      .slice()
+      .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
+      .forEach((estado) => {
+        const option = document.createElement("option");
+        option.value = estado.sigla;
+        option.dataset.codigo = String(estado.id);
+        option.textContent = estado.nome;
+        estadoSelect.appendChild(option);
+      });
+
+    estadoSelect.disabled = false;
+    cidadeSelect.disabled = true;
+    cidadeSelect.innerHTML = '<option value="" disabled selected>selecione um estado primeiro</option>';
+    if (errorEl) errorEl.hidden = true;
+  } catch (error) {
+    estadoSelect.innerHTML = '<option value="" disabled selected>não foi possível carregar os estados</option>';
+    showError(errorEl, "Não foi possível carregar os estados. Verifique sua conexão e tente novamente.");
+    console.error("Erro ao carregar estados:", error);
+  }
+}
+
+/** Busca os municípios do estado selecionado e os preenche na segunda lista. */
+async function carregarMunicipiosDoEstado(siglaEstado, cidadeSelect, errorEl) {
+  if (!cidadeSelect) return;
+
+  const estadoSelect = document.getElementById("perfil-estado");
+  const codigoEstado = estadoSelect?.selectedOptions?.[0]?.dataset?.codigo;
+
+  if (!siglaEstado || !codigoEstado) {
+    cidadeSelect.innerHTML = '<option value="" disabled selected>selecione um estado primeiro</option>';
+    cidadeSelect.disabled = true;
+    return;
   }
 
-  document.getElementById("btn-sair").addEventListener("click", () => {
-    Storage.limparSessao();   // encerra a sessão, mantendo a conta salva
-    state.contaAtual = null;
-    state.justCreated = false;
-    Router.navigate("welcome");
-  });
+  cidadeSelect.disabled = true;
+  cidadeSelect.innerHTML = '<option value="" disabled selected>carregando cidades...</option>';
+
+  try {
+    const municipios = await Localidades.carregarMunicipios(Number(codigoEstado));
+
+    cidadeSelect.innerHTML = '<option value="" disabled selected>selecionar cidade</option>';
+
+    municipios
+      .slice()
+      .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"))
+      .forEach((municipio) => {
+        const option = document.createElement("option");
+        option.value = municipio.nome;
+        option.textContent = municipio.nome;
+        cidadeSelect.appendChild(option);
+      });
+
+    cidadeSelect.disabled = false;
+    cidadeSelect.value = "";
+    if (errorEl) errorEl.hidden = true;
+  } catch (error) {
+    cidadeSelect.innerHTML = '<option value="" disabled selected>não foi possível carregar as cidades</option>';
+    cidadeSelect.disabled = true;
+    showError(errorEl, "Não foi possível carregar os municípios. Verifique sua conexão e tente novamente.");
+    console.error("Erro ao carregar municípios:", error);
+  }
 }
 
-/* =========================================================
-   FUNÇÕES AUXILIARES
-   ========================================================= */
+/** Alterna o tema claro/escuro do app e salva a escolha no navegador. */
+function applyTheme(themeName) {
+  const theme = themeName === "dark" ? "dark" : "light";
+  document.body.dataset.theme = theme;
 
-/** Mostra uma mensagem em um elemento <p class="error">. */
-function showError(element, message) {
-  element.textContent = message;
-  element.hidden = false;
+  const logoutBtn = document.getElementById("btn-sair");
+  if (logoutBtn) {
+    if (theme === "dark") {
+      logoutBtn.style.color = "#f8fbff";
+      logoutBtn.style.background = "linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.1))";
+      logoutBtn.style.border = "1px solid rgba(191, 219, 254, 0.42)";
+      logoutBtn.style.boxShadow = "0 10px 20px rgba(59, 130, 246, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08)";
+    } else {
+      logoutBtn.style.color = "#1f2937";
+      logoutBtn.style.background = "rgba(15, 23, 42, 0.04)";
+      logoutBtn.style.border = "1px solid rgba(148, 163, 184, 0.2)";
+      logoutBtn.style.boxShadow = "none";
+    }
+  }
+
+  const toggle = document.getElementById("theme-toggle");
+  if (!toggle) return;
+
+  const icon = toggle.querySelector(".theme-toggle-icon");
+  const text = toggle.querySelector(".theme-toggle-text");
+
+  if (icon) {
+    icon.textContent = theme === "dark" ? "🌙" : "☀️";
+  }
+
+  if (text) {
+    text.textContent = theme === "dark" ? "Escuro" : "Claro";
+  }
+}
+
+function initThemeToggle() {
+  const savedTheme = localStorage.getItem("agenda_escolar:theme") || "light";
+  applyTheme(savedTheme);
+
+  const toggle = document.getElementById("theme-toggle");
+  if (!toggle) return;
+
+  toggle.addEventListener("click", () => {
+    const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+    localStorage.setItem("agenda_escolar:theme", nextTheme);
+    applyTheme(nextTheme);
+  });
 }
 
 /** Aplica a cor (azul/verde) do perfil escolhido a um elemento. */
@@ -403,6 +543,7 @@ function formatDateTime(isoString) {
    ========================================================= */
 atualizarHora();
 setInterval(atualizarHora, 60000);
+initThemeToggle();
 
 const contaSalva = Storage.contaLogada();
 if (contaSalva) {

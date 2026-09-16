@@ -57,6 +57,11 @@ Tudo fica no navegador, via `localStorage` (código em `js/storage.js`):
 - **"sair"** encerra a sessão mas mantém a conta salva;
 - **"apagar dados salvos"**, na tela inicial, limpa tudo.
 
+Os estados e municípios do cadastro vêm da API oficial do IBGE. Por isso,
+é necessário estar conectado à internet ao abrir a etapa de perfil pela
+primeira vez; os municípios consultados ficam em cache enquanto a tela
+permanece aberta.
+
 Para espiar o que está guardado: F12 → aba **Application** → **Local Storage**.
 
 > ⚠️ Por ser um projeto de estudo, a senha é salva em texto puro. Num

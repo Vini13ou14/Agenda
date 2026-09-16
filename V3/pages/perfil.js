@@ -4,8 +4,9 @@
    Ao clicar em "finalizar", o js/app.js junta estes dados com
    os da etapa anterior e grava a conta no navegador.
 
-   Para mudar as opções das listas, basta acrescentar ou
-   remover as linhas <option> abaixo.
+  Os estados e municípios são carregados pela API oficial do
+  IBGE. Ao escolher um estado, a lista de municípios é filtrada
+  automaticamente para aquele estado.
    ========================================================= */
 
 PAGES.perfil = `
@@ -23,24 +24,14 @@ PAGES.perfil = `
   <div class="stack">
 
     <div class="select-wrap">
-      <select class="input" id="perfil-estado">
-        <option value="" disabled selected>selecionar estado</option>
-        <option>Pernambuco</option>
-        <option>São Paulo</option>
-        <option>Bahia</option>
-        <option>Minas Gerais</option>
-        <option>Ceará</option>
+      <select class="input" id="perfil-estado" aria-label="Selecione o estado">
+        <option value="" disabled selected>carregando estados...</option>
       </select>
     </div>
 
     <div class="select-wrap">
-      <select class="input" id="perfil-cidade">
-        <option value="" disabled selected>selecionar cidade</option>
-        <option>Santa Cruz do Capibaribe</option>
-        <option>Caruaru</option>
-        <option>Recife</option>
-        <option>Toritama</option>
-        <option>Brejo da Madre de Deus</option>
+      <select class="input" id="perfil-cidade" aria-label="Selecione a cidade" disabled>
+        <option value="" disabled selected>selecione um estado primeiro</option>
       </select>
     </div>
 
