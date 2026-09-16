@@ -383,6 +383,45 @@ function initPerfil() {
   });
 }
 
+/* =========================================================
+   TELA: PAINEL APÓS O LOGIN (DASHBOARD)
+   ========================================================= */
+function initDashboard() {
+  // Usa a conta em memória ou, se a página foi recarregada,
+  // a sessão salva no navegador.
+  const conta = state.contaAtual || Storage.contaLogada();
+
+  if (!conta) {
+    Router.replace("welcome");
+    return;
+  }
+
+  state.contaAtual = conta;
+
+  getElement("dash-username").textContent = conta.username;
+  getElement("dash-role-badge").textContent = `conta de ${conta.role.label}`;
+  getElement("dash-cpf").textContent = conta.cpf;
+  getElement("dash-nascimento").textContent = formatDate(conta.nascimento);
+  getElement("dash-estado").textContent = conta.estado;
+  getElement("dash-cidade").textContent = conta.cidade;
+  getElement("dash-escola").textContent = conta.escola;
+  getElement("dash-escolaridade").textContent = conta.escolaridade;
+
+  const criadoEmEl = getElement("dash-criado-em");
+  if (criadoEmEl) {
+    criadoEmEl.textContent = conta.criadoEm
+      ? `conta criada em ${formatDateTime(conta.criadoEm)}`
+      : "";
+  }
+
+  bindClick("btn-sair", () => {
+    Storage.limparSessao();
+    state.contaAtual = null;
+    resetTransientState();
+    Router.navigate("welcome");
+  });
+}
+
 /** Carrega os 27 estados brasileiros diretamente da API oficial do IBGE. */
 async function carregarEstadosDoIbge(estadoSelect, cidadeSelect, errorEl) {
   if (!estadoSelect || !cidadeSelect) return;
